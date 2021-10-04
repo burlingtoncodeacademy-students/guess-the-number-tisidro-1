@@ -15,7 +15,10 @@ start();
 
 async function start() {
 
-  console.log("Let's play a game where you (human) choose a number and I (computer) try to guess it.")
+  /*code that allows user input to determine which game to play (index.js or reverse_name.js)
+
+  //what I would like to do here for this portion of icebox, is copy the reverse_name.js code at the end this file and have an async function reverse() that starts the code for the reverse code. However, I wasn't able to get that part to work properly and decide to put it in a file called index2.js--I kept the file separate so you can see this initial part of the project works, and it's got clean code. I explain the problem in index2.js Please take a look at the index2.js that has my attempt at the last part of the Ice Box story, thank you! :) */
+
 
   let maxNumber = await ask("Please start by picking a maximum number. What is your Max number?\n");
 
@@ -56,12 +59,15 @@ async function start() {
 
   //---------------------Adjusting Guess Range Up or Down Based On User Input------------------------//
 
-  //conditional for where user answers no or n to the question "is your number ___?". 
+  let count = 0;//I am declaring count here and setting it equal to zero. I will use this to keep track of how many tries it takes user to guess the number
 
+  //conditional for where user answers no or n to the question "is your number ___?". 
   while (answer === "N" || answer === "n") {
 
     //asynchronous function to gather user input to determine if guess was higher or lower than user's secret number
     let hiLow = await ask(`Is your secret number higher (h) or lower (l) than ${guess}?`);
+
+
 
     //I kept making entry typos, so I wrote this while loop to re-ask the question and continue on
     while (hiLow !== "h" && hiLow !== "l") {
@@ -70,19 +76,26 @@ async function start() {
 
     }
 
+
+
     if (hiLow === "h") {
       //if the user replies "higher," sets a new *minimum* higher by one because the computer was too low
       min = guess + 1;
 
+
       //since min has changed, calling guess again will update it accordingly to the new value for guess (adjusting the min)
-      guess = getHalf(min, max)
+      guess = getHalf(min, max);
+
+      count = count + 1;//I'm adding 1 to the count each time this function loops. This will allow me to track how many times the user guessed too low
 
     }
     else if (hiLow === "l") {
       //if the user replies "higher," sets a new *minimum* higher by one because the computer was too low
       max = guess - 1;
 
-      guess = getHalf(min, max)  //since max has changed, calling guess again will update it accordingly to the new value for guess (adjusting the max)
+      guess = getHalf(min, max);  //since max has changed, calling guess again will update it accordingly to the new value for guess (adjusting the max)
+
+      count = count + 1;//I'm adding 1 to the count each time this function loops. This will allow me to track how many times the user guessed too low
 
     }
 
@@ -103,7 +116,7 @@ async function start() {
 
   //conditional here where user answers yes or y, console logs a victory message 
   if (answer === "Y" || answer === "y") {
-    console.log(`Your number was ${guess}! Yay!`);
+    console.log(`Your number was ${guess} and it took you ${count} tries!!! Yay!`);
 
   }
 
