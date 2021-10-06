@@ -146,7 +146,7 @@ async function start() {
             process.exit();
         }
     }
-    youGuess();
+
 
     async function iWillGuess() {
 
@@ -254,7 +254,7 @@ async function start() {
             }
         }
     }
-    iWillGuess();
+
 
 
 }
